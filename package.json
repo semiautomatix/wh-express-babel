@@ -1,0 +1,131 @@
+{
+  "name": "wh-express-babel",
+  "version": "0.1.1",
+  "description": "Using latest JavaScript features on the server",
+  "repository": "https://github.com/vmasto/express-babel",
+  "author": "Vassilis Mastorostergios <vmasto@gmail.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=3.10.0"
+  },
+  "scripts": {
+    "start": "npm run serve",
+    "build": "npm run build-ts && npm run tslint",
+    "build:nofix": "npm run build-ts",
+    "serve": "node dist/index.js",
+    "watch-node": "nodemon dist/index.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "test": "jest --forceExit --coverage --verbose",
+    "watch-test": "npm run test -- --watchAll",
+    "build-ts": "tsc && copyfiles .env dist/ && copyfiles public/** dist/",
+    "build:ts": "babel src -d dist --extensions \".ts,.tsx,.js\" --source-maps inline && copyfiles .env dist/",
+    "watch-ts": "tsc -w",
+    "tslint": "tslint --fix -c tslint.json -p tsconfig.json",
+    "tslint-fix": "tslint --fix -c tslint.json -p tsconfig.json src/**/*.ts -t verbose",
+    "debug": "set debug=*,-express*,-babel* && npm run build && npm run watch-debug",
+    "debug:nofix": "npm run build:nofix && npm run watch-debug",
+    "serve-debug": "nodemon --inspect dist/index.js",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" \"npm run watch-ts\" \"npm run serve-debug\""
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.3.3",
+    "@material-ui/styles": "^4.3.3",
+    "apollo-server-express": "^2.6.3",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6-alpha.6",
+    "express-jwt": "^5.3.1",
+    "graphql": "^14.3.1",
+    "graphql-compose": "^7.3.0",
+    "graphql-compose-connection": "^6.0.3",
+    "graphql-compose-mongoose": "^7.1.4",
+    "graphql-compose-pagination": "^6.0.3",
+    "graphql-iso-date": "^3.6.1",
+    "graphql-tools": "^4.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "log4js": "^4.0.2",
+    "moment": "^2.24.0",
+    "mongoose": "^5.7.1",
+    "morgan": "^1.9.1",
+    "pug": "^2.0.3",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^2.6.3",
+    "rsmq": "^0.11.0",
+    "typegoose": "^5.7.2",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/plugin-proposal-decorators": "^7.1.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.4",
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-typescript": "^7.3.3",
+    "@babel/register": "^7.0.0",
+    "@babel/runtime": "^7.3.4",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/body-parser": "^1.17.0",
+    "@types/classnames": "^2.2.6",
+    "@types/cors": "^2.8.4",
+    "@types/debug": "^4.1.2",
+    "@types/dotenv": "^6.1.0",
+    "@types/express": "^4.16.1",
+    "@types/express-jwt": "^0.0.40",
+    "@types/graphql": "^14.0.7",
+    "@types/jsonwebtoken": "^8.3.0",
+    "@types/mongodb": "^3.1.14",
+    "@types/mongoose": "^5.3.1",
+    "@types/morgan": "^1.7.35",
+    "@types/node": "^11.10.5",
+    "@types/uuid": "^3.4.5",
+    "babel-eslint": "^9.0.0",
+    "babel-jest": "^24.1.0",
+    "babel-register": "^6.26.0",
+    "dotenv": "^6.2.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jest": "^21.27.2",
+    "eslint-watch": "^4.0.2",
+    "jest": "^24.1.0",
+    "nodemon": "^1.18.10",
+    "supertest": "^3.4.2",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.17.0",
+    "typescript": "^3.6.0-dev.20190619"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "plugins": [
+      "import",
+      "jest"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    },
+    "env": {
+      "node": true,
+      "jest": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "rules": {
+      "jest/no-focused-tests": 2,
+      "jest/no-identical-title": 2
+    }
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}

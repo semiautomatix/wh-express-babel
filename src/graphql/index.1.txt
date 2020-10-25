@@ -1,0 +1,33 @@
+import { makeExecutableSchema } from 'graphql-tools';
+import User, { resolvers as userResolvers } from './users.1';
+
+const RootQuery = `
+	scalar GraphQLDateTime
+
+	type Query {
+		_empty: String
+	},
+	type Mutation {
+		_empty: String
+	}
+`;
+
+const SchemaDefinition = `
+  	schema {
+		query: Query,
+		mutation: Mutation
+  	}
+`;
+
+const schema = makeExecutableSchema({
+	typeDefs: [
+		SchemaDefinition,
+		RootQuery,
+		...User
+	],
+	resolvers: [
+		userResolvers,
+	]
+});
+
+export default schema;

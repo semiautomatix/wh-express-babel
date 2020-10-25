@@ -1,0 +1,33 @@
+import Users from '../models/users';
+// @ts-ignore
+import { GraphQLDateTime } from 'graphql-iso-date';
+
+const getUsers = async () => await Users.find().select('-hash');
+
+const User = `
+    extend type Query {
+        users: [User],
+    },
+    type User {
+        _id: String,
+        username: String!,
+        lastName: String!
+        firstName: String!,
+        createdDate: GraphQLDateTime,
+        id: String,
+        _v: Int
+    }
+`;
+
+// The resolvers
+const resolvers = {
+	Query: {
+        users: getUsers,
+    }
+};
+
+export {
+	resolvers,
+};
+
+export default [User];
